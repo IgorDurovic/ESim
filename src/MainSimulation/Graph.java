@@ -1,90 +1,59 @@
 package MainSimulation;
 
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.ArrayList;
 
-public abstract class Graph extends Node implements Collection{
+public abstract class Graph<T extends Node> extends Node{
 	
 	protected int max;
 	protected int nodes;
-	protected int vertices;
+	protected int edges;
 	
-	@Override
-	public boolean add(Object e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean addAll(Collection c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
+	protected ArrayList<T> nodeList;
+	protected ArrayList<Edge<T>> edgeList;
+	
+	public Object[] toArray(){
 		
+		return this.nodeList.toArray();
 	}
 
-	@Override
-	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+	public int getMax() {
+		return max;
 	}
 
-	@Override
-	public boolean containsAll(Collection c) {
-		// TODO Auto-generated method stub
-		return false;
+	public void setMax(int max) {
+		this.max = max;
 	}
 
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+	public int getNodes() {
+		return nodes;
 	}
 
-	@Override
-	public Iterator iterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setNodes(int nodes) {
+		this.nodes = nodes;
 	}
 
-	@Override
-	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+	public int getEdges() {
+		return edges;
 	}
 
-	@Override
-	public boolean removeAll(Collection c) {
-		// TODO Auto-generated method stub
-		return false;
+	public void setEdges(int edges) {
+		this.edges = edges;
 	}
 
-	@Override
-	public boolean retainAll(Collection c) {
-		// TODO Auto-generated method stub
-		return false;
+	public ArrayList<T> getNodeList() {
+		return nodeList;
 	}
 
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void setNodeList(ArrayList<T> nodeList) {
+		this.nodeList = nodeList;
 	}
 
-	@Override
-	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Edge<T>> getEdgeList() {
+		return edgeList;
 	}
 
-	@Override
-	public Object[] toArray(Object[] a) {
-		// TODO Auto-generated method stub
-		return null;
+	public void setEdgeList(ArrayList<Edge<T>> edgeList) {
+		this.edgeList = edgeList;
 	}
-
+	
 }

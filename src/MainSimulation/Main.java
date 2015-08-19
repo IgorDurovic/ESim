@@ -1,6 +1,7 @@
 package MainSimulation;
 
 import java.awt.Graphics;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -13,7 +14,7 @@ public class Main{
 
 		public void paint(Graphics g){
 			
-			world.toArray();
+			List<Node> temp = world.getNodeList();
 			
 			for(int i = 0; i < width/cellDim; i++){
 				for(int j = 0; j < height/cellDim; j++){
