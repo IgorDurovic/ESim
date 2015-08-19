@@ -1,6 +1,6 @@
 package MainSimulation;
 
-public abstract class Person {
+public abstract class Person extends Node{
 	
 	public enum Gender{
 		MALE, FEMALE;

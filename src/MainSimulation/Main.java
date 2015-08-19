@@ -1,12 +1,29 @@
 package MainSimulation;
-import java.util.ArrayList;
 
+import java.awt.Graphics;
 
-import processing.core.*;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
 
-public class Main extends PApplet{
+import GraphTypes.WorldGraph;
+
+public class Main{
 	
-	public final static int cellDim = 25;
+	class Canvas extends JComponent{
+
+		public void paint(Graphics g){
+			
+			world.toArray();
+			
+			for(int i = 0; i < width/cellDim; i++){
+				for(int j = 0; j < height/cellDim; j++){
+					g.drawRect(i * cellDim, j * cellDim, cellDim, cellDim);
+				}
+			}
+		}
+	}
+	
+	public final static int cellDim = 25, width = 100, height = 100;
 	
 	/*	Keeping track of different demographics.
 		The separate groups are based on the SIR model demographic distinction.
@@ -30,18 +47,17 @@ public class Main extends PApplet{
 	
 	public int lastTime; //saves the time of the most recent cycle.
 	
-	public void setup(){
-		//call size(int width, int height) to set dimensions. Default is 100px by 100px
-		
-		stroke(48);
-		
-	}
-	
-	public void draw(){
+	public static void setup(){
 		
 	}
 	
 	public static void main(String[] args){
+		JFrame window = new JFrame();
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setBounds(500, 300, 100, 140);
+		window.getContentPane().add(new Main().new Canvas());
+		window.setVisible(true);
 		
+		setup();
 	}
 }
