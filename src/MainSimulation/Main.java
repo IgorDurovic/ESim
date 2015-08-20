@@ -14,17 +14,30 @@ public class Main{
 
 		public void paint(Graphics g){
 			
-			List<Node> temp = world.getNodeList();
+			//List<Node> temp = world.getNodeList();
 			
-			for(int i = 0; i < width/cellDim; i++){
-				for(int j = 0; j < height/cellDim; j++){
-					g.drawRect(i * cellDim, j * cellDim, cellDim, cellDim);
+			int startX = 100;
+			int radius = 300;
+			
+			//example graph construction, once the Graph class is implemented
+			//the graph will be constructed from the world variable
+			
+			for(int i = 0; i < 50; i++){
+				g.drawOval(radius + startX + (int)(radius * Math.cos(2 * Math.PI / 50 * i)), 
+						radius + (int)(radius * Math.sin(2 * Math.PI / 50 * i)), 
+						cellDim, cellDim);
+				for(int j = 0; j < 5; j++){
+					int rand = (int)(Math.random() * 50);
+					g.drawLine(radius + startX + (int)(radius * Math.cos(2 * Math.PI / 50 * i)) + cellDim/2,
+							radius + (int)(radius * Math.sin(2 * Math.PI / 50 * i)) + cellDim/2, 
+							radius + startX + (int)(radius * Math.cos(2 * Math.PI / 50 * rand)) + cellDim/2,
+							radius + (int)(radius * Math.sin(2 * Math.PI / 50 * rand)) + cellDim/2);
 				}
 			}
 		}
 	}
 	
-	public final static int cellDim = 25, width = 100, height = 100;
+	public final static int cellDim = 25, width = 800, height = 800;
 	
 	/*	Keeping track of different demographics.
 		The separate groups are based on the SIR model demographic distinction.
@@ -55,7 +68,7 @@ public class Main{
 	public static void main(String[] args){
 		JFrame window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setBounds(500, 300, 100, 140);
+		window.setBounds(500, 300, width, height);
 		window.getContentPane().add(new Main().new Canvas());
 		window.setVisible(true);
 		
