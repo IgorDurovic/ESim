@@ -69,7 +69,6 @@ public class Main{
 		window.setBounds(500, 300, width, height);
 		window.getContentPane().add(new Main().new Canvas());
 		window.setVisible(true);
-		
 		setup();
 	}
 }
