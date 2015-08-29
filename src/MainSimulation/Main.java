@@ -14,8 +14,6 @@ public class Main{
 
 		public void paint(Graphics g){
 			
-			//List<Node> temp = world.getNodeList();
-			
 			int startX = 100;
 			int radius = 300;
 			
