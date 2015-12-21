@@ -9,6 +9,21 @@ public abstract class Node {
 	protected int localInfected;
 	protected int localRecovered;
 	
-	protected ArrayList<Edge> neighbors;
+	protected String name;
+	
+	protected ArrayList<Node> neighbors;
+	
+	public Node(String s){
+		name = s;
+		neighbors = new ArrayList<Node>();
+	}
+	
+	public boolean equals(Object o){
+		if(o instanceof Node){
+			return ((Node) o).name.equals(this.name);
+		}
+		
+		return false;
+	}
 	
 }

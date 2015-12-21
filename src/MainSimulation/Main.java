@@ -1,39 +1,11 @@
 package MainSimulation;
 
-import java.awt.Graphics;
-import java.util.List;
+import java.util.Random;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-
+import GraphTypes.LocalGraph;
 import GraphTypes.WorldGraph;
 
 public class Main{
-	
-	class Canvas extends JComponent{
-
-		public void paint(Graphics g){
-			
-			int startX = 100;
-			int radius = 300;
-			
-			//example graph construction, once the Graph class is implemented
-			//the graph will be constructed from the world variable
-			
-			for(int i = 0; i < 50; i++){
-				g.drawOval(radius + startX + (int)(radius * Math.cos(2 * Math.PI / 50 * i)), 
-						radius + (int)(radius * Math.sin(2 * Math.PI / 50 * i)), 
-						cellDim, cellDim);
-				for(int j = 0; j < 5; j++){
-					int rand = (int)(Math.random() * 50);
-					g.drawLine(radius + startX + (int)(radius * Math.cos(2 * Math.PI / 50 * i)) + cellDim/2,
-							radius + (int)(radius * Math.sin(2 * Math.PI / 50 * i)) + cellDim/2, 
-							radius + startX + (int)(radius * Math.cos(2 * Math.PI / 50 * rand)) + cellDim/2,
-							radius + (int)(radius * Math.sin(2 * Math.PI / 50 * rand)) + cellDim/2);
-				}
-			}
-		}
-	}
 	
 	public final static int cellDim = 25, width = 800, height = 800;
 	
@@ -54,8 +26,8 @@ public class Main{
 	public int deaths; //keeps track of the death count throughout the simulation, used in data
 					   //visualization after the simulation is complete.
 	
-	public WorldGraph world = new WorldGraph();
-	public WorldGraph tempWorld = new WorldGraph();
+	public static WorldGraph world;
+	public static WorldGraph tempWorld;
 	
 	public int lastTime; //saves the time of the most recent cycle.
 	
@@ -64,11 +36,24 @@ public class Main{
 	}
 	
 	public static void main(String[] args){
-		JFrame window = new JFrame();
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setBounds(500, 300, width, height);
-		window.getContentPane().add(new Main().new Canvas());
-		window.setVisible(true);
-		setup();
+		world = new WorldGraph("World");
+		tempWorld = new WorldGraph("TempWorld");
+		Random rnd = new Random();
+		
+		for(int i = 0; i < 100; i++){
+			world.nodeList.add(new LocalGraph(i+""));
+		}
+		
+		for(Node n: world.nodeList){
+			for(int i = 0; i < 3; i++){
+				int r = rnd.nextInt(99);
+				while(n.neighbors.contains(world.nodeList.get(r))){
+					r = rnd.nextInt(99);
+				}
+				n.neighbors.add(world.nodeList.get(r));
+			}
+		}
+		
+		world.display();
 	}
 }

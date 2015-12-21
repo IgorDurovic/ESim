@@ -1,15 +1,45 @@
 package MainSimulation;
 
 import java.util.ArrayList;
+import org.graphstream.graph.*;
+import org.graphstream.graph.implementations.*;
 
-public abstract class Graph<T extends Node> extends Node{
+import GraphTypes.WorldGraph;
+
+public abstract class AbstractGraph<T extends Node> extends Node{
 	
 	protected int max;
 	protected int nodes;
 	protected int edges;
 	
 	protected ArrayList<T> nodeList;
-	protected ArrayList<Edge<T>> edgeList;
+	
+	protected AbstractGraph(String s){
+		super(s);
+		nodeList = new ArrayList<T>();
+	}
+	
+	public void display(){
+		
+		Graph graph = new SingleGraph("World");
+		
+		for(Node n: this.nodeList){
+			graph.addNode(n.name);
+		}
+		
+		for(Node from: this.nodeList){
+			for(Node to: from.neighbors){
+				try{
+					graph.addEdge(from.name + " " + to.name, from.name, to.name);
+				}
+				catch(EdgeRejectedException e){
+					continue;
+				}
+			}
+		}
+		
+		graph.display();
+	}
 	
 	public Object[] toArray(){
 		
@@ -48,12 +78,4 @@ public abstract class Graph<T extends Node> extends Node{
 		this.nodeList = nodeList;
 	}
 
-	public ArrayList<Edge<T>> getEdgeList() {
-		return edgeList;
-	}
-
-	public void setEdgeList(ArrayList<Edge<T>> edgeList) {
-		this.edgeList = edgeList;
-	}
-	
 }
