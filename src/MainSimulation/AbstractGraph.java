@@ -12,10 +12,34 @@ public abstract class AbstractGraph<T extends Node> extends Node{
 	protected int nodes;
 	protected int edges;
 	
+	protected int localPopulation;
+	protected int localSusceptible;
+	protected int localInfected;
+	protected int localRecovered;
+	
+	protected double eRate;
+	
 	protected ArrayList<T> nodeList;
 	
-	protected AbstractGraph(String s){
+	public int getLocalPopulation() {
+		return localPopulation;
+	}
+
+	public void setLocalPopulation(int localPopulation) {
+		this.localPopulation = localPopulation;
+	}
+
+	public double geteRate() {
+		return eRate;
+	}
+
+	public void seteRate(double eRate) {
+		this.eRate = eRate;
+	}
+
+	protected AbstractGraph(String s, double e){
 		super(s);
+		eRate = e;
 		nodeList = new ArrayList<T>();
 	}
 	
@@ -28,16 +52,19 @@ public abstract class AbstractGraph<T extends Node> extends Node{
 		}
 		
 		for(Node from: this.nodeList){
-			for(Node to: from.neighbors){
+			for(Link to: from.neighbors){
 				try{
-					graph.addEdge(from.name + " " + to.name, from.name, to.name);
+					graph.addEdge(from.name + " " + to.getNeighbor().name, from.name, to.getNeighbor().name);
 				}
 				catch(EdgeRejectedException e){
 					continue;
 				}
 			}
+			System.out.println();
 		}
 		
+		graph.addAttribute("ui.quality");
+        graph.addAttribute("ui.antialias");
 		graph.display();
 	}
 	
@@ -45,6 +72,10 @@ public abstract class AbstractGraph<T extends Node> extends Node{
 		
 		return this.nodeList.toArray();
 	}
+	
+	abstract public void generateRandom(int limit);
+	
+	abstract public void movement();
 
 	public int getMax() {
 		return max;

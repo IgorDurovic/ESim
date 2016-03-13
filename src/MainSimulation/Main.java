@@ -1,8 +1,7 @@
 package MainSimulation;
 
-import java.util.Random;
+import java.util.Scanner;
 
-import GraphTypes.LocalGraph;
 import GraphTypes.WorldGraph;
 
 public class Main{
@@ -31,28 +30,35 @@ public class Main{
 	
 	public int lastTime; //saves the time of the most recent cycle.
 	
-	public static void setup(){
+	public static void setup() throws Exception{
+		world = new WorldGraph("World", 0);
+		tempWorld = new WorldGraph("TempWorld", 0);
+		
+		world.generateRandom(100000);
+		
+		Pathogen mainPathogen = Pathogen.constructPathogen();
+		startSim(mainPathogen);
+			
+	}
+	
+	public static void startSim(Pathogen p){
+		for(int i = 0; i < 1000000; i++){
+			movement(); //movement phase
+			infection(); //infection phase;
+		}
+	}
+	
+	public static void movement(){
+		world.movement();
+	}
+	
+	public static void infection(){
 		
 	}
 	
-	public static void main(String[] args){
-		world = new WorldGraph("World");
-		tempWorld = new WorldGraph("TempWorld");
-		Random rnd = new Random();
+	public static void main(String[] args) throws Exception{
 		
-		for(int i = 0; i < 100; i++){
-			world.nodeList.add(new LocalGraph(i+""));
-		}
-		
-		for(Node n: world.nodeList){
-			for(int i = 0; i < 3; i++){
-				int r = rnd.nextInt(99);
-				while(n.neighbors.contains(world.nodeList.get(r))){
-					r = rnd.nextInt(99);
-				}
-				n.neighbors.add(world.nodeList.get(r));
-			}
-		}
+		setup();
 		
 		world.display();
 	}

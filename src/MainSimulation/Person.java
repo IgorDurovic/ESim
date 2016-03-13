@@ -2,10 +2,6 @@ package MainSimulation;
 
 public abstract class Person extends Node{
 	
-	public Person(String s) {
-		super(s);
-		// TODO Auto-generated constructor stub
-	}
 	public enum Gender{
 		MALE, FEMALE;
 	}
@@ -17,5 +13,12 @@ public abstract class Person extends Node{
 	private int age;
 	private Gender gender;
 	private Race race;
+	
+	private boolean infected, immune;
+	
+	public Person(String s) {
+		super(s);
+		// TODO Auto-generated constructor stub
+	}
 	
 }
