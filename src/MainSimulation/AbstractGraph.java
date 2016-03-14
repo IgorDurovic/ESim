@@ -58,6 +58,8 @@ public abstract class AbstractGraph<T extends Node> extends Node{
 	abstract public void generateRandom(ArrayList<Person> people, int limit);
 	
 	abstract public void movement();
+	
+	abstract public void infection();
 
 	public int getLocalPopulation() {
 		return localPopulation;

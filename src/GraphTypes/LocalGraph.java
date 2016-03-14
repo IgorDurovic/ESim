@@ -79,12 +79,18 @@ public class LocalGraph extends AbstractGraph<Person>{
 				int r = rnd.nextInt(this.nodeList.size());
 				while(p.getNeighbors().contains(new Link<Person>(1, this.nodeList.get(r)))){
 					r = rnd.nextInt(this.nodeList.size());
-					System.out.println(this.nodeList.size());
+					//System.out.println(this.nodeList.size());
 				}
-				System.out.println();
+				//System.out.println();
 				p.getNeighbors().add(new Link<Person>(1, this.nodeList.get(r)));
 			}
 		}
+	}
+
+	@Override
+	public void infection() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

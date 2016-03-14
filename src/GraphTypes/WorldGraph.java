@@ -22,9 +22,9 @@ public class WorldGraph extends AbstractGraph<LocalGraph>{
 		this.localPopulation = limit;
 		this.localSusceptible = limit;
 		
-		for(int i = 0; i < limit/1000; i++){
+		for(int i = 0; i < limit/100; i++){
 			LocalGraph temp = new LocalGraph(i + "", 0.01);
-			temp.generateRandom(people, 1000);
+			temp.generateRandom(people, 100);
 			this.nodeList.add(temp);
 		}
 		
@@ -44,9 +44,11 @@ public class WorldGraph extends AbstractGraph<LocalGraph>{
 		ArrayList<Person> emmigrants;
 		
 		for(LocalGraph lg: this.nodeList){
-			int pop = lg.getLocalPopulation();
+			int pop = lg.getNodeList().size();
 			int emmigration = (int)(pop * lg.geteRate());
 			emmigrants = new ArrayList<>();
+			
+			//System.out.print(lg.getNodeList().size() + " ");
 			
 			for(int i = 0; i < emmigration; i++){
 				if(lg.getNodeList().isEmpty()) break;
@@ -76,7 +78,20 @@ public class WorldGraph extends AbstractGraph<LocalGraph>{
 				}
 			}
 			
+			if(!emmigrants.isEmpty()){
+				System.out.println("here");
+				lg.getImmigrants().addAll(emmigrants);
+				emmigrants.clear();
+			}
+			
+			//System.out.println(lg.getNodeList().size());
+			
 			lg.movement();
 		}
+	}
+	
+	@Override
+	public void infection(){
+		
 	}
 }
