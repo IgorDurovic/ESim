@@ -9,8 +9,6 @@ import GraphTypes.WorldGraph;
 public abstract class AbstractGraph<T extends Node> extends Node{
 	
 	protected int max;
-	protected int nodes;
-	protected int edges;
 	
 	protected int localPopulation;
 	protected int localSusceptible;
@@ -20,22 +18,6 @@ public abstract class AbstractGraph<T extends Node> extends Node{
 	protected double eRate;
 	
 	protected ArrayList<T> nodeList;
-	
-	public int getLocalPopulation() {
-		return localPopulation;
-	}
-
-	public void setLocalPopulation(int localPopulation) {
-		this.localPopulation = localPopulation;
-	}
-
-	public double geteRate() {
-		return eRate;
-	}
-
-	public void seteRate(double eRate) {
-		this.eRate = eRate;
-	}
 
 	protected AbstractGraph(String s, double e){
 		super(s);
@@ -73,32 +55,32 @@ public abstract class AbstractGraph<T extends Node> extends Node{
 		return this.nodeList.toArray();
 	}
 	
-	abstract public void generateRandom(int limit);
+	abstract public void generateRandom(ArrayList<Person> people, int limit);
 	
 	abstract public void movement();
 
+	public int getLocalPopulation() {
+		return localPopulation;
+	}
+
+	public void setLocalPopulation(int localPopulation) {
+		this.localPopulation = localPopulation;
+	}
+
+	public double geteRate() {
+		return eRate;
+	}
+
+	public void seteRate(double eRate) {
+		this.eRate = eRate;
+	}
+	
 	public int getMax() {
 		return max;
 	}
 
 	public void setMax(int max) {
 		this.max = max;
-	}
-
-	public int getNodes() {
-		return nodes;
-	}
-
-	public void setNodes(int nodes) {
-		this.nodes = nodes;
-	}
-
-	public int getEdges() {
-		return edges;
-	}
-
-	public void setEdges(int edges) {
-		this.edges = edges;
 	}
 
 	public ArrayList<T> getNodeList() {

@@ -1,11 +1,11 @@
 package MainSimulation;
 
-public class Link {
+public class Link<T extends Node> {
 	
 	private int weight;
-	private Node neighbor;
+	private T neighbor;
 	
-	public Link(int w, Node n){
+	public Link(int w, T n){
 		weight = w;
 		neighbor = n;
 	}
@@ -32,7 +32,7 @@ public class Link {
 		return neighbor;
 	}
 
-	public void setNeighbor(Node neighbor) {
+	public void setNeighbor(T neighbor) {
 		this.neighbor = neighbor;
 	}
 	

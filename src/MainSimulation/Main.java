@@ -1,13 +1,12 @@
 package MainSimulation;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
 import GraphTypes.WorldGraph;
 
 public class Main{
 	
-	/*	Keeping track of different demographics.
+	/*
+	 	Keeping track of different demographics.
 		The separate groups are based on the SIR/SIS model demographic distinction.
 		At the beginning of each simulation the majority of the population is part of the susceptible group.
 		After each cycle the groups are updated to account for the spread of the demographic.
@@ -16,7 +15,7 @@ public class Main{
 	*/
 	
 	public static int totalPopulation; //total amount of people in the scope of the simulation
-								//updated for deaths, births, immigration, and emigration
+								       //updated for deaths, births, immigration, and emigration
 	public static int susceptible, infected, recovered;
 	
 	public int deaths; //keeps track of the death count throughout the simulation, used in data
@@ -31,14 +30,14 @@ public class Main{
 	public static void setup() throws Exception{
 		world = new WorldGraph("World", 0);
 		tempWorld = new WorldGraph("TempWorld", 0);
-		totalPopulation = 100000;
-		susceptible = 100000;
+		totalPopulation = 50000;
+		susceptible = 50000;
 		infected = 0;
 		recovered = 0;
 		
 		population = Person.generatePopulation(totalPopulation);
 		
-		world.generateRandom(totalPopulation);
+		world.generateRandom(population, totalPopulation);
 		
 		Pathogen mainPathogen = Pathogen.constructPathogen();
 		startSim(mainPathogen);
@@ -46,14 +45,10 @@ public class Main{
 	}
 	
 	public static void startSim(Pathogen p){
-		for(int i = 0; i < 1000000; i++){
-			movement(); //movement phase
+		for(int i = 0; i < 200; i++){
+			world.movement(); //movement phase
 			infection(); //infection phase;
 		}
-	}
-	
-	public static void movement(){
-		world.movement();
 	}
 	
 	public static void infection(){

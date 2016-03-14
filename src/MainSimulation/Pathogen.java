@@ -32,10 +32,10 @@ public class Pathogen {
 		System.out.println("Mortality Rate: ");
 		mr = scn.nextDouble();
 		
-		System.out.println("Sympotic [0|1]: ");
+		System.out.println("Sympotic [true|false]: ");
 		s = scn.nextBoolean();
 		
-		System.out.println("Potential Natural Immunity [0|1]: ");
+		System.out.println("Potential Natural Immunity [true|false]: ");
 		i = scn.nextBoolean();
 		
 		System.out.println("Mode of transmission: \n1. Airborne\n2. Body Fluid\n3. Food\n4. Water");

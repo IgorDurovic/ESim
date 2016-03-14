@@ -66,7 +66,7 @@ public abstract class Person extends Node{
 			temp.add(new SusceptiblePerson(i + "", gender, age, race));
 		}
 		
-		return null;
+		return temp;
 	}
 	
 }
