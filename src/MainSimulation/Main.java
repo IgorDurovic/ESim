@@ -13,6 +13,7 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RefineryUtilities;
 
 import GraphTypes.WorldGraph;
 
@@ -143,5 +144,9 @@ public class Main{
 		setup();
 		
 		world.display();
+		PropGraph pg = new PropGraph("simulation", Main.createChart(Main.createDataset()), chartPanel);
+		pg.pack();
+		RefineryUtilities.centerFrameOnScreen(pg);
+        pg.setVisible(true);
 	}
 }
