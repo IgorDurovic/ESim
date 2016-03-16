@@ -20,9 +20,9 @@ public class WorldGraph extends AbstractGraph<LocalGraph>{
 		this.localSusceptible = limit;
 		this.localRecovered = 0;
 		
-		for(int i = 0; i < limit/1000; i++){
-			LocalGraph temp = new LocalGraph(i + "", 0.01);
-			temp.generateRandom(people, 1000);
+		for(int i = 0; i < limit/500; i++){
+			LocalGraph temp = new LocalGraph(i + "", 0.1);
+			temp.generateRandom(people, 500);
 			this.localInfected += temp.getLocalInfected();
 			this.nodeList.add(temp);
 		}

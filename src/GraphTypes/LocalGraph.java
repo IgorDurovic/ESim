@@ -105,9 +105,9 @@ public class LocalGraph extends AbstractGraph<Person>{
 				}
 				continue;
 			}
-			for(Link l: p.getNeighbors()){
+			for(Link<Person> l: p.getNeighbors()){
 				double prob = rnd.nextDouble();
-				if(prob < 0.08){
+				if(((Person)(l.getNeighbor())).getStatus() == Person.Status.INFECTED && prob < 0.2){
 					this.localSusceptible--;
 					this.localInfected++;
 					p.setStatus(Person.Status.INFECTED);

@@ -69,7 +69,7 @@ public class Main{
 	}
 	
 	public static void startSim(){
-		for(int i = 0; i < 100; i++){
+		for(int i = 0; i < 200; i++){
 			world.movement(); //movement phase
 			world.infection(); //infection phase;
 			graphing(world.localSusceptible, world.localInfected, world.localRecovered, -1, i);
