@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import MainSimulation.*;
-import People.SusceptiblePerson;
 
 public class LocalGraph extends AbstractGraph<Person>{
 	
@@ -47,9 +46,14 @@ public class LocalGraph extends AbstractGraph<Person>{
 		
 		this.localSusceptible = limit;
 		this.localPopulation = limit;
+		this.localRecovered = 0;
 		
 		for(int i = 0; i < limit; i++){
-			this.nodeList.add(people.remove(people.size() - 1));
+			Person p = people.remove(people.size() - 1);
+			if(p.getStatus() == Person.Status.INFECTED){
+				this.localInfected++;
+			}
+			this.nodeList.add(p);
 		}
 		
 		for(Node n: this.nodeList){
@@ -89,8 +93,27 @@ public class LocalGraph extends AbstractGraph<Person>{
 
 	@Override
 	public void infection() {
-		// TODO Auto-generated method stub
-		
+		Random rnd = new Random();
+		for(Person p: this.nodeList){
+			if(p.getStatus() == Person.Status.RECOVERED) continue;
+			if(p.getStatus() == Person.Status.INFECTED){
+				double prob = rnd.nextDouble();
+				if(prob < 0.05){
+					this.localInfected--;
+					this.localRecovered++;
+					p.setStatus(Person.Status.RECOVERED);
+				}
+				continue;
+			}
+			for(Link l: p.getNeighbors()){
+				double prob = rnd.nextDouble();
+				if(prob < 0.08){
+					this.localSusceptible--;
+					this.localInfected++;
+					p.setStatus(Person.Status.INFECTED);
+				}
+			}
+		}
 	}
 	
 }

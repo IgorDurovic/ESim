@@ -39,6 +39,8 @@ public class Main{
 	public static WorldGraph tempWorld;
 	public static ArrayList<Person> population;
 	
+	public static Pathogen mainPathogen;
+	
 	final static XYSeries series1 = new XYSeries("Susceptible");
     final static XYSeries series2 = new XYSeries("Infected");
     final static XYSeries series3 = new XYSeries("Recovered");
@@ -53,31 +55,32 @@ public class Main{
 		world = new WorldGraph("World", 0);
 		tempWorld = new WorldGraph("TempWorld", 0);
 		totalPopulation = 50000;
-		susceptible = 50000;
-		infected = 0;
+		susceptible = 49999;
+		infected = 1;
 		recovered = 0;
 		
-		population = Person.generatePopulation(totalPopulation);
+		population = Person.generatePopulation(totalPopulation, 1);
 		
 		world.generateRandom(population, totalPopulation);
 		
-		Pathogen mainPathogen = Pathogen.constructPathogen();
-		startSim(mainPathogen);
+		mainPathogen = Pathogen.constructPathogen();
+		startSim();
 			
 	}
 	
-	public static void startSim(Pathogen p){
-		for(int i = 0; i < 20000; i++){
+	public static void startSim(){
+		for(int i = 0; i < 100; i++){
 			world.movement(); //movement phase
 			world.infection(); //infection phase;
+			graphing(world.localSusceptible, world.localInfected, world.localRecovered, -1, i);
 		}
 	}
 	
-	public void graphing(int sp, int ip, int rp, int d){
-		dataset(sp, ip, rp, d);
+	public static void graphing(int sp, int ip, int rp, int d, int count){
+		dataset(sp, ip, rp, d, count);
 	}
 	
-	private void dataset(int s, int i, int r, int d) {
+	private static void dataset(int s, int i, int r, int d, int count) {
         
         series1.add(count, s);
 

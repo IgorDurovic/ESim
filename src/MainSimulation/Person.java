@@ -3,9 +3,7 @@ package MainSimulation;
 import java.util.ArrayList;
 import java.util.Random;
 
-import People.*;
-
-public abstract class Person extends Node{
+public class Person extends Node{
 	
 	public enum Gender{
 		MALE, FEMALE;
@@ -13,6 +11,10 @@ public abstract class Person extends Node{
 	
 	public enum Race{
 		WHITE, BLACK, HISPANIC, ASIAN, MIX;
+	}
+	
+	public enum Status{
+		SUSCEPTIBLE, INFECTED, RECOVERED
 	}
 	
 	public static final double[] ageDistro = new double[]{0.0666, 0.1378, 0.209, 0.2788, 0.3448, 0.413, 0.4854
@@ -28,6 +30,7 @@ public abstract class Person extends Node{
 	private int age;
 	private Gender gender;
 	private Race race;
+	private Status status;
 	
 	private boolean immune;
 	
@@ -37,13 +40,14 @@ public abstract class Person extends Node{
 		age = a;
 		race = r;
 		immune = false;
+		status = Status.SUSCEPTIBLE;
 	}
 	
-	public static ArrayList<Person> generatePopulation(int n){
+	public static ArrayList<Person> generatePopulation(int n, int infected){
 		ArrayList<Person> temp = new ArrayList<>();
 		Random rand = new Random();
 		
-		for(int i = 0; i < n; i++){
+		for(int i = 0; i < n - 1; i++){
 			Gender gender = rand.nextBoolean() ? Gender.MALE : Gender.FEMALE;
 			Double d = rand.nextDouble();
 			int age = -1;
@@ -56,17 +60,48 @@ public abstract class Person extends Node{
 			
 			d = rand.nextDouble();
 			Race race = Race.WHITE;
-			for(int j = 0; i < raceDistro.length; j++){
+			for(int j = 0; j < raceDistro.length; j++){
 				if(raceDistro[j] > d){
 					race = raceValue[j];
 					break;
 				}
 			}
 			
-			temp.add(new SusceptiblePerson(i + "", gender, age, race));
+			temp.add(new Person(i + "", gender, age, race));
 		}
 		
+		Gender gender = rand.nextBoolean() ? Gender.MALE : Gender.FEMALE;
+		Double d = rand.nextDouble();
+		int age = -1;
+		for(int j = 0; j < ageDistro.length; j++){
+			if(ageDistro[j] > d){
+				age = ageValue[j];
+				break;
+			}
+		}
+		
+		d = rand.nextDouble();
+		Race race = Race.WHITE;
+		for(int j = 0; j < raceDistro.length; j++){
+			if(raceDistro[j] > d){
+				race = raceValue[j];
+				break;
+			}
+		}
+		
+		Person p = new Person(n - 1 + "", gender, age, race);
+		p.status = Person.Status.INFECTED;
+		temp.add(p);
+		
 		return temp;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 	
 }

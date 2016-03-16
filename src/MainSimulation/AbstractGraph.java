@@ -76,13 +76,29 @@ public abstract class AbstractGraph<T extends Node> extends Node{
 	public void seteRate(double eRate) {
 		this.eRate = eRate;
 	}
-	
-	public int getMax() {
-		return max;
+
+	public int getLocalSusceptible() {
+		return localSusceptible;
 	}
 
-	public void setMax(int max) {
-		this.max = max;
+	public void setLocalSusceptible(int localSusceptible) {
+		this.localSusceptible = localSusceptible;
+	}
+
+	public int getLocalInfected() {
+		return localInfected;
+	}
+
+	public void setLocalInfected(int localInfected) {
+		this.localInfected = localInfected;
+	}
+
+	public int getLocalRecovered() {
+		return localRecovered;
+	}
+
+	public void setLocalRecovered(int localRecovered) {
+		this.localRecovered = localRecovered;
 	}
 
 	public ArrayList<T> getNodeList() {

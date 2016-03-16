@@ -6,10 +6,7 @@ import java.util.Random;
 import GraphTypes.LocalGraph;
 import GraphTypes.WorldGraph;
 
-import MainSimulation.AbstractGraph;
-import MainSimulation.Link;
-import MainSimulation.Node;
-import MainSimulation.Person;
+import MainSimulation.*;
 
 public class WorldGraph extends AbstractGraph<LocalGraph>{
 	
@@ -21,10 +18,12 @@ public class WorldGraph extends AbstractGraph<LocalGraph>{
 		Random rnd = new Random();
 		this.localPopulation = limit;
 		this.localSusceptible = limit;
+		this.localRecovered = 0;
 		
-		for(int i = 0; i < limit/100; i++){
+		for(int i = 0; i < limit/1000; i++){
 			LocalGraph temp = new LocalGraph(i + "", 0.01);
-			temp.generateRandom(people, 100);
+			temp.generateRandom(people, 1000);
+			this.localInfected += temp.getLocalInfected();
 			this.nodeList.add(temp);
 		}
 		
@@ -53,6 +52,15 @@ public class WorldGraph extends AbstractGraph<LocalGraph>{
 			for(int i = 0; i < emmigration; i++){
 				if(lg.getNodeList().isEmpty()) break;
 				Person p = lg.getNodeList().remove(lg.getNodeList().size() - 1);
+				if(p.getStatus() == Person.Status.INFECTED){
+					lg.setLocalInfected(lg.getLocalInfected() - 1);
+				}
+				if(p.getStatus() == Person.Status.SUSCEPTIBLE){
+					lg.setLocalSusceptible(lg.getLocalSusceptible() - 1);
+				}
+				if(p.getStatus() == Person.Status.RECOVERED){
+					lg.setLocalRecovered(lg.getLocalRecovered() - 1);
+				}
 				for(Link<Person> l: p.getNeighbors()){
 					int index = lg.getNodeList().indexOf(l.getNeighbor());
 					if(index == -1) continue;
@@ -74,12 +82,22 @@ public class WorldGraph extends AbstractGraph<LocalGraph>{
 				int count = (int)Math.ceil(l.getWeight() / totalCapacity * size);
 				for(int i = 0; i < count && !emmigrants.isEmpty(); i++){
 					Person emmigrant = emmigrants.remove(emmigrants.size() - 1);
-					((LocalGraph) l.getNeighbor()).getImmigrants().add(emmigrant);
+					LocalGraph to = ((LocalGraph) l.getNeighbor()); 
+					if(emmigrant.getStatus() == Person.Status.INFECTED){
+						to.setLocalInfected(to.getLocalInfected() + 1);
+					}
+					if(emmigrant.getStatus() == Person.Status.SUSCEPTIBLE){
+						to.setLocalSusceptible(to.getLocalSusceptible() + 1);
+					}
+					if(emmigrant.getStatus() == Person.Status.RECOVERED){
+						to.setLocalRecovered(to.getLocalRecovered() + 1);
+					}
+					to.getImmigrants().add(emmigrant);
 				}
 			}
 			
 			if(!emmigrants.isEmpty()){
-				System.out.println("here");
+				//System.out.println("here");
 				lg.getImmigrants().addAll(emmigrants);
 				emmigrants.clear();
 			}
@@ -92,6 +110,15 @@ public class WorldGraph extends AbstractGraph<LocalGraph>{
 	
 	@Override
 	public void infection(){
-		
+		//System.out.println(this.localInfected);
+		this.localInfected = 0;
+		this.localRecovered = 0;
+		this.localSusceptible = 0;
+		for(LocalGraph lg: this.nodeList){
+			lg.infection();
+			this.localInfected += lg.getLocalInfected();
+			this.localSusceptible += lg.getLocalSusceptible();
+			this.localRecovered += lg.getLocalRecovered();
+		}
 	}
 }
